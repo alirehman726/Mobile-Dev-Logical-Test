@@ -1,0 +1,61 @@
+
+
+
+
+Question 4 :-
+
+Let’s see we an api url www.example.com/api/get/1 
+Write a sample code to call this rest api and display the result.
+
+
+
+
+Answer 4 :-
+
+import 'dart:async';
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(new MaterialApp(
+    home: HomePage(),
+  ));
+}
+
+class HomePage extends StatefulWidget {
+  @override
+  HomePageState createState() => HomePageState();
+}
+
+class HomePageState extends State<HomePage> {
+
+  List data;
+
+  Future<String> getData() async {
+    var response = await http.get(
+      Uri.encodeFull("http://www.example.com/api/get/1"),
+      headers: {
+        "Accept": "application/json"
+      }
+    );
+
+    List data  = JSON.decode(response.body);
+    print(data);
+
+    
+    return "Success!";
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: RaisedButton(
+          child: Text("Get data"),
+          onPressed: getData,
+        ),
+      ),
+    );
+  }
+}
